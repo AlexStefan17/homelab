@@ -17,8 +17,8 @@ services:
       - WEBUI_PORT=8080
       - TORRENTING_PORT=6881
     volumes:
-      - /mnt/DR01/media_server/docker/qbittorrent:/config
-      - /mnt/DR01/media_server/data:/data
+      - /docker/qbittorrent:/config
+      - /mnt/samba_share/media_server/data:/data
     ports:
       - 8080:8080
       - 6881:6881
@@ -35,7 +35,8 @@ services:
       - PGID=1000
       - TZ=Europe/Bucharest
     volumes:
-      - /mnt/DR01/media_server/docker/prowlarr:/config
+      - /etc/localtime:/etc/localtime:ro
+      - /docker/prowlarr:/config
     ports:
       - 9696:9696
     restart: unless-stopped
@@ -52,8 +53,9 @@ services:
       - PGID=1000
       - TZ=Europe/Bucharest
     volumes:
-      - /mnt/DR01/media_server/docker/sonarr:/config
-      - /mnt/DR01/media_server/data:/data
+      - /etc/localtime:/etc/localtime:ro
+      - /docker/sonarr:/config
+      - /mnt/samba_share/media_server/data:/data
     ports:
       - 8989:8989
     networks:
@@ -69,8 +71,9 @@ services:
       - PGID=1000
       - TZ=Europe/Bucharest
     volumes:
-      - /mnt/DR01/media_server/docker/radarr:/config
-      - /mnt/DR01/media_server/data:/data
+      - /etc/localtime:/etc/localtime:ro
+      - /docker/radarr:/config
+      - /mnt/samba_share/media_server/data:/data
     ports:
       - 7878:7878
     networks:
@@ -82,8 +85,9 @@ services:
     image: lscr.io/linuxserver/lidarr:latest
     restart: unless-stopped
     volumes:
-      - /mnt/DR01/media_server/docker/lidarr:/config
-      - /mnt/DR01/media_server/data:/data
+      - /etc/localtime:/etc/localtime:ro
+      - /docker/lidarr:/config
+      - /mnt/samba_share/media_server/data:/data
     environment:
      - PUID=1000
      - PGID=1000
@@ -103,8 +107,9 @@ services:
       - PGID=1000
       - TZ=Europe/Bucharest
     volumes:
-      - /mnt/DR01/media_server/docker/bazarr:/config
-      - /mnt/DR01/media_server/data:/data
+      - /etc/localtime:/etc/localtime:ro
+      - /docker/bazarr:/config
+      - /mnt/samba_share/media_server/data:/data
     ports:
       - 6767:6767
     networks:
@@ -119,7 +124,7 @@ services:
       - PGID=1000
       - TZ=Europe/Bucharest
     volumes:
-      - /mnt/DR01/media_server/docker/jellyseerr:/app/config
+      - /docker/jellyseerr:/app/config
     ports:
       - 5055:5055
     restart: unless-stopped
