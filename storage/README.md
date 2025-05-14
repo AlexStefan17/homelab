@@ -61,6 +61,7 @@ alex@openmediavault:/export/share$ tree -L 5
 - mount to client
 
 ```
+sudo mkdir -p /mnt/share 
 sudo mount -t nfs 192.168.1.163:/export/share /mnt/share
 
 in /etc/fstab paste this:
