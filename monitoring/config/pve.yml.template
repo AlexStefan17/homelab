@@ -1,0 +1,5 @@
+default:
+    user: ${proxmox_user}
+    token_name: ${proxmox_token_name}
+    token_value: ${proxmox_token_value}
+    verify_ssl: false

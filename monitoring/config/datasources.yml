@@ -1,0 +1,9 @@
+apiVersion: 1
+
+datasources:  # List of data sources to be configured
+  - name: prometheus  # The name of the data source, as it will appear in Grafana.
+    type: prometheus  # The type of the data source, indicating it is a Prometheus instance.
+    access: proxy  # Access mode; 'proxy' means requests will go through the Grafana server.
+    url: http://prometheus:9090
+
+
