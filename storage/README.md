@@ -34,8 +34,9 @@ qm set 204 -sata2 /dev/disk/by-partuuid/432a829b-4209-0649-8da3-31115c27ba7b
 
 # /etc/exports: the access control list for filesystems which may be exported
 #               to NFS clients.  See exports(5).
-/export/backup 192.168.1.0/24(fsid=a7d64e69-339c-4ad6-bab6-bdc8d18f0d4c,rw,subtree_check,insecure,no_root_squash)
-/export 192.168.1.0/24(ro,fsid=0,root_squash,subtree_check)
+/export/share 172.xxx.xxx.0/24(fsid=bb2c6b75-89ce-466e-b91a-14a3384d471c,rw,subtree_check,insecure,no_root_squash)
+/export/backup 172.xxx.xxx.0/24(fsid=a7d64e69-339c-4ad6-bab6-bdc8d18f0d4c,rw,subtree_check,insecure,no_root_squash)
+/export 172.xxx.xxx.0/24(ro,fsid=0,root_squash,subtree_check)
 ```
 
 - add new user on OMV
@@ -61,10 +62,12 @@ alex@openmediavault:/export/share$ tree -L 5
 
 ```
 sudo mkdir -p /mnt/share 
-sudo mount -t nfs 192.168.1.163:/export/share /mnt/share
+sudo mount -t nfs 172.xxx.xxx.163:/export/share /mnt/share
 
 in /etc/fstab paste this:
-192.168.1.163:/export/share /mnt/share nfs defaults,_netdev 0 0
+xxx.xxx.xxx.163:/export/share /mnt/share nfs defaults,_netdev 0 0
 
 sudo mount -a
+
+sudo chown -R 1000:1000 /mnt/share/media_server/data
 ```
