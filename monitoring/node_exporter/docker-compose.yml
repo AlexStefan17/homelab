@@ -1,0 +1,58 @@
+networks:
+  monitoring:
+    driver: bridge
+
+volumes:
+  prometheus_data:
+    name: prometheus_data
+  grafana_data:
+    name: grafana_data
+
+services:
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    volumes:
+      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
+    expose:
+      - 9090
+    networks:
+      - monitoring
+    depends_on:
+      - node_exporter
+
+  node_exporter:
+    image: prom/node-exporter:latest
+    container_name: node_exporter
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.rootfs=/rootfs'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+    expose:
+      - 9100
+    restart: unless-stopped
+    networks:
+      - monitoring
+      
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - ./config/datasources.yml:/etc/grafana/provisioning/datasources/datasources.yml  # Mounts the Grafana data source configuration file
+      - ./config/dashboard.yaml:/etc/grafana/provisioning/dashboards/dashboard.yaml  # Mounts the Grafana dashboard configuration file
+      - ./config/dashboard.json:/var/lib/grafana/dashboards/dashboard.json
+    restart: unless-stopped
+    networks:
+      - monitoring
+    depends_on:
+      - prometheus
