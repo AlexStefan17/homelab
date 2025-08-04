@@ -1,41 +1,45 @@
-terraform {
-    required_providers {
-        proxmox = {
-            source = "telmate/proxmox"
-        }
-    }
-}
-
-provider "proxmox" {
-    pm_api_url   = "/api2/json"
-    pm_user = ""
-    pm_api_token_id = ""
-    pm_api_token_secret = ""
-    pm_tls_insecure = true
-}
-
-
 resource "proxmox_vm_qemu" "vm-instance" {
-    name                = "terraform-vm"
-    target_node         = "alexproxmox"
-    clone               = "debian12-ansible-template"
-    full_clone          = true
-    cores               = 2
-    memory              = 2048
-    onboot = true
+  count       = var.vm_count
+  name        = "${var.vm_name}-${count.index + 1}"
+  target_node = "alexproxmox"
+  clone       = "debian12-template"
+  full_clone          = true
+  cores  = var.vm_cores
+  memory = var.vm_memory
+  scsihw = "virtio-scsi-single"
 
-    disk {
-        size            = "32G"
-        type            = "scsi"
-        storage         = "local-lvm"
-        discard         = "on"
-    }
+  disk {
+    slot    = "scsi0"
+    size    = var.vm_disk_size
+    type    = "disk"
+    storage = "local-lvm"
+  }
 
-    network {
-        model     = "virtio"
-        bridge    = "vmbr0"
-        firewall  = false
-        link_down = false
-    }
+  disk {
+    slot    = "ide2"
+    type    = "cloudinit"
+    storage = "local-lvm"
+  }
 
+  network {
+    id     = 0
+    model  = "virtio"
+    bridge = var.vm_network
+  }
+
+  serial {
+    id   = 0
+    type = "socket"
+  }
+
+  os_type   = "cloud-init"
+  # ipconfig0 = "ip=dhcp"
+  ipconfig0 = "ip=${var.vm_ip_base}${count.index + var.vm_ip_start}/24,gw=${var.vm_gateway}"
+  sshkeys   = var.ssh_key
+  
+  automatic_reboot = true
+
+  lifecycle {
+    ignore_changes = [network, sshkeys]
+  }
 }
