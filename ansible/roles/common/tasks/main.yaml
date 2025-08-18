@@ -4,4 +4,24 @@
     update_cache: yes
     cache_valid_time: 3600
 
-    
+- name: Install basic packages
+  apt:
+    name:
+      - curl
+      - vim
+      - sudo
+      - htop
+      - git
+    state: present
+    update_cache: yes
+
+- name: Disable swap
+  command: swapoff -a
+  become: yes
+
+- name: Ensure swap entry is removed from fstab
+  replace:
+    path: /etc/fstab
+    regexp: '(^.*swap.*$)'
+    replace: '# \1'
+  become: yes

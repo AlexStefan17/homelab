@@ -6,7 +6,10 @@ all:
   children:
     k3s_master:
       hosts:
-        172.20.50.150:
+        master1:
+          ansible_host: 172.20.50.150
+
     k3s_worker:
       hosts:
-        172.20.50.151:
+        worker1:
+          ansible_host: 172.20.50.151

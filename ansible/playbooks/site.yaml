@@ -1,0 +1,36 @@
+---
+- name: Apply common configuration to all nodes
+  hosts: all
+  become: yes
+  roles:
+    - common
+
+- name: Setup K3s master
+  hosts: k3s_master
+  become: yes
+  roles:
+    - k3s_master
+
+- name: Setup K3s worker
+  hosts: k3s_worker
+  become: yes
+  roles:
+    - k3s_worker
+
+- name: Install Helm on master
+  hosts: k3s_master
+  become: yes
+  roles:
+    - helm
+
+- name: Install NGINX Ingress on master
+  hosts: k3s_master
+  become: yes
+  roles:
+    - nginx_ingress
+
+- name: Deploy k3s manifests
+  hosts: k3s_master
+  become: yes
+  roles:
+    - k3s_manifests

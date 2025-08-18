@@ -1,0 +1,31 @@
+---
+- name: Ensure destination directory exists
+  file:
+    path: /opt/k3s-manifests
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+  become: yes
+
+- name: Clone Git repository
+  git:
+    repo: 'https://github.com/AlexStefan17/homelab.git'
+    dest: /opt/k3s-manifests
+    version: main
+    force: yes
+  become: yes
+
+- name: Ensure media-apps namespace exists
+  become: yes
+  shell: |
+    kubectl get namespace media-apps >/dev/null 2>&1 || kubectl create namespace media-apps
+  args:
+    executable: /bin/bash
+
+- name: Apply Kubernetes manifests
+  shell: |
+    kubectl apply -R -f /opt/k3s-manifests/k3s/nginx-ingress
+  args:
+    executable: /bin/bash
+  become: yes

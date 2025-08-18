@@ -1,0 +1,61 @@
+---
+- name: Install K3s server
+  shell: |
+    curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--disable=traefik" sh -
+  args:
+    executable: /bin/bash
+  become: yes
+
+- name: Ensure K3s service is active
+  systemd:
+    name: k3s
+    state: started
+    enabled: yes
+  become: yes
+
+- name: Get K3s node token
+  command: cat /var/lib/rancher/k3s/server/node-token
+  register: master_token
+  become: yes
+  run_once: true
+
+- name: Save token as fact
+  set_fact:
+    k3s_token: "{{ master_token.stdout }}"
+  run_once: true
+
+- name: Copy kubeconfig to root home
+  copy:
+    src: /etc/rancher/k3s/k3s.yaml
+    dest: /root/k3s.yaml
+    remote_src: yes
+    owner: root
+    group: root
+    mode: 0600
+  become: yes
+
+- name: Replace localhost with master IP in kubeconfig
+  replace:
+    path: /root/k3s.yaml
+    regexp: '127\.0\.0\.1'
+    replace: "{{ ansible_host }}"
+  become: yes
+
+- name: Ensure .kube directory exists
+  file:
+    path: /root/.kube
+    state: directory
+    owner: root
+    group: root
+    mode: 0700
+  become: yes
+
+- name: Ensure kubeconfig is available for kubectl
+  copy:
+    src: /root/k3s.yaml
+    dest: /root/.kube/config
+    remote_src: yes
+    owner: root
+    group: root
+    mode: 0600
+  become: yes
