@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pve-exporter-config
+  namespace: monitoring
+data:
+  pve.yml: |-
+    default:
+        user: <user>
+        token_name: <token_name>
+        token_value: <token_value>
+        verify_ssl: false
