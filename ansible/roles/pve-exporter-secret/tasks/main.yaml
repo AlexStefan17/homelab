@@ -1,8 +1,3 @@
-- name: Apply Kubernetes manifests from repo
-  kubernetes.core.k8s:
-    state: present
-    src: /opt/k3s-manifests/k3s/monitoring/pve-exporter/
-
 - name: Create PVE exporter secret from Vault
   kubernetes.core.k8s:
     state: present
