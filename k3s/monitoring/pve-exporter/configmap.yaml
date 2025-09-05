@@ -6,7 +6,7 @@ metadata:
 data:
   pve.yml: |-
     default:
-        user: <user>
-        token_name: <token_name>
-        token_value: <token_value>
+        user: ${PVE_USER}
+        token_name: ${PVE_TOKEN_NAME}
+        token_value: ${PVE_TOKEN_VALUE}
         verify_ssl: false

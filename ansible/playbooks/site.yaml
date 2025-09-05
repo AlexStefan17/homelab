@@ -9,13 +9,13 @@
   hosts: k3s_master
   become: yes
   roles:
-    - k3s_master
+    - k3s-master
 
 - name: Setup K3s worker
   hosts: k3s_worker
   become: yes
   roles:
-    - k3s_worker
+    - k3s-worker
 
 - name: Install Helm on master
   hosts: k3s_master
@@ -27,10 +27,16 @@
   hosts: k3s_master
   become: yes
   roles:
-    - nginx_ingress
+    - nginx-ingress
 
 - name: Deploy k3s manifests
   hosts: k3s_master
   become: yes
   roles:
-    - k3s_manifests
+    - k3s-manifests-media
+
+- name: Deploy PVE exporter Secret
+  hosts: k3s_master
+  become: yes
+  roles:
+    - pve-exporter-secret

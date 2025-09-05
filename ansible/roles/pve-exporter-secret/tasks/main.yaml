@@ -1,0 +1,19 @@
+- name: Apply Kubernetes manifests from repo
+  kubernetes.core.k8s:
+    state: present
+    src: ../../../../k3s/monitoring/pve-exporter/ 
+
+- name: Create PVE exporter secret from Vault
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Secret
+      metadata:
+        name: pve-exporter-secret
+        namespace: monitoring
+      type: Opaque
+      stringData:
+        user: "{{ pve_user }}"
+        token_name: "{{ pve_token_name }}"
+        token_value: "{{ pve_token_value }}"
