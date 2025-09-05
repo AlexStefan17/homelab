@@ -45,8 +45,6 @@
 
 - name: Check PVE Vault variables
   hosts: k3s_master
-  vars_files:
-    - ../group_vars/all.yaml
   tasks:
     - debug:
         msg: "user={{ pve_user }}, token_name={{ pve_token_name }}, token_value={{ pve_token_value }}"
@@ -54,8 +52,6 @@
 - name: Deploy PVE exporter Secret
   hosts: k3s_master
   become: yes
-  vars_files:
-    - ../group_vars/all.yaml
   vars:
     ansible_python_interpreter: /opt/ansible-venv/bin/python
   roles:
