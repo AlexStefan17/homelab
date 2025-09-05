@@ -29,6 +29,5 @@
 - name: Install kubernetes and ansible in virtual environment
   command: /opt/ansible-venv/bin/pip install kubernetes ansible
 
-- name: Install kubernetes.core collection
-  ansible.builtin.command:
-    cmd: ansible-galaxy collection install kubernetes.core
+- name: Install kubernetes.core collection in virtual environment
+  command: /opt/ansible-venv/bin/ansible-galaxy collection install kubernetes.core
