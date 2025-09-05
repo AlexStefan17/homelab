@@ -5,7 +5,7 @@
   roles:
     - common
 
-- name: Prepare VM for Kubernetes Ansible tasks
+- name: Prepare VM for Kubernetes tasks
   hosts: k3s_master
   become: yes
   roles:
@@ -14,35 +14,47 @@
 - name: Setup K3s master
   hosts: k3s_master
   become: yes
+  vars:
+    ansible_python_interpreter: /opt/ansible-venv/bin/python
   roles:
     - k3s-master
 
 - name: Setup K3s worker
   hosts: k3s_worker
   become: yes
+  vars:
+    ansible_python_interpreter: /opt/ansible-venv/bin/python
   roles:
     - k3s-worker
 
 - name: Install Helm on master
   hosts: k3s_master
   become: yes
+  vars:
+    ansible_python_interpreter: /opt/ansible-venv/bin/python
   roles:
     - helm
 
 - name: Install NGINX Ingress on master
   hosts: k3s_master
   become: yes
+  vars:
+    ansible_python_interpreter: /opt/ansible-venv/bin/python
   roles:
     - nginx-ingress
 
 - name: Deploy k3s manifests
   hosts: k3s_master
   become: yes
+  vars:
+    ansible_python_interpreter: /opt/ansible-venv/bin/python
   roles:
     - k3s-manifests-media
 
 - name: Deploy PVE exporter Secret
   hosts: k3s_master
   become: yes
+  vars:
+    ansible_python_interpreter: /opt/ansible-venv/bin/python
   roles:
     - pve-exporter-secret
