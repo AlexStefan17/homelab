@@ -1,12 +1,14 @@
 ---
 - name: Apply common configuration to all nodes
   hosts: all
+  gather_facts: no
   become: yes
   roles:
     - common
 
 - name: Prepare VM for Kubernetes tasks
   hosts: k3s_master
+  gather_facts: no
   become: yes
   roles:
     - install-k8s-deps
