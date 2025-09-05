@@ -1,7 +1,7 @@
 all:
   vars:
     ansible_user: alex
-    ansible_python_interpreter: /usr/bin/python3
+    ansible_python_interpreter: /opt/ansible-venv/bin/python
 
   children:
     k3s_master:

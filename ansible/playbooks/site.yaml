@@ -5,6 +5,12 @@
   roles:
     - common
 
+- name: Prepare VM for Kubernetes Ansible tasks
+  hosts: k3s_master
+  become: yes
+  roles:
+    - install-k8s-deps
+
 - name: Setup K3s master
   hosts: k3s_master
   become: yes
