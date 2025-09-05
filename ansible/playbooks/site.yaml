@@ -43,12 +43,6 @@
   roles:
     - k3s-manifests-media
 
-- name: Check PVE Vault variables
-  hosts: k3s_master
-  tasks:
-    - debug:
-        msg: "user={{ pve_user }}, token_name={{ pve_token_name }}, token_value={{ pve_token_value }}"
-
 - name: Deploy PVE exporter Secret
   hosts: k3s_master
   become: yes
