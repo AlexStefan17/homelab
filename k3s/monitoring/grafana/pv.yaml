@@ -8,6 +8,6 @@ spec:
   accessModes:
     - ReadWriteMany
   nfs:
-    server: 172.20.50.160
+    server: 172.20.50.150
     path: /srv/grafana-dashboards
   persistentVolumeReclaimPolicy: Retain
