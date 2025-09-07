@@ -9,7 +9,7 @@
 
 - name: Copy Grafana dashboards from repo to node
   copy:
-    src: k3s/monitoring/grafana/dashboards/
+    src: /opt/k3s-manifests/k3s/monitoring/grafana-dashboards
     dest: /opt/grafana-dashboards/
     owner: root
     group: root
