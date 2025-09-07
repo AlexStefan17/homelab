@@ -43,8 +43,14 @@
   roles:
     - k3s-manifests-media
 
-- name: Deploy grafana-dashboards to all nodes
-  hosts: k3s_master, k3s_worker
+- name: Create NFS server for Grafana
+  hosts: k3s_master
+  become: yes
+  roles:
+    - nfs-server-grafana
+
+- name: Deploy grafana-dashboards to NFS server
+  hosts: k3s_master
   become: yes
   roles:
     - grafana-dashboards

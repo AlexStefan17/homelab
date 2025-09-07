@@ -13,15 +13,6 @@ spec:
       labels:
         app: grafana
     spec:
-      initContainers:
-      - name: copy-dashboards
-        image: busybox
-        command: ["sh", "-c", "cp -r /source-dashboards/* /var/lib/grafana/dashboards/"]
-        volumeMounts:
-        - name: dashboards
-          mountPath: /var/lib/grafana/dashboards
-        - name: source-dashboards
-          mountPath: /source-dashboards
       containers:
       - name: grafana
         image: grafana/grafana:latest
@@ -43,10 +34,6 @@ spec:
       - name: dashboards
         persistentVolumeClaim:
           claimName: grafana-dashboards-pvc
-      - name: source-dashboards
-        hostPath:
-          path: /opt/grafana-dashboards
-          type: Directory
       - name: grafana-dashboards-config
         configMap:
           name: grafana-dashboards-config
