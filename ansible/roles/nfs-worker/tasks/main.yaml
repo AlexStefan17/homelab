@@ -1,0 +1,28 @@
+- name: Install NFS client packages
+  package:
+    name: nfs-common
+    state: present
+
+- name: Create local mountpoint
+  file:
+    path: /srv/grafana-dashboards
+    state: directory
+    owner: 472
+    group: 472
+    mode: '0777'
+
+- name: Mount NFS share
+  mount:
+    path: /srv/grafana-dashboards
+    src: "{{ nfs_server }}:/srv/grafana-dashboards"
+    fstype: nfs
+    opts: rw,sync
+    state: mounted
+
+- name: Ensure NFS mount persists in fstab
+  mount:
+    path: /srv/grafana-dashboards
+    src: "{{ nfs_server }}:/srv/grafana-dashboards"
+    fstype: nfs
+    opts: rw,sync
+    state: present

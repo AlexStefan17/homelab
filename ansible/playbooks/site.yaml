@@ -49,6 +49,14 @@
   roles:
     - nfs-server-grafana
 
+- name: Mount NFS server on workers
+  hosts: k3s_worker
+  become: yes
+  vars:
+    nfs_server: 172.20.50.160
+  roles:
+    - nfs-worker
+
 - name: Deploy grafana-dashboards to NFS server
   hosts: k3s_master
   become: yes
@@ -62,5 +70,6 @@
     - ../group_vars/all.yaml
   vars:
     ansible_python_interpreter: /opt/ansible-venv/bin/python
+    nfs_server: 172.20.50.160
   roles:
     - k3s-manifests-monitoring

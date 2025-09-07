@@ -7,9 +7,10 @@
   file:
     path: /srv/grafana-dashboards
     state: directory
-    owner: nobody
-    group: nogroup
+    owner: 472        # UID Grafana
+    group: 472        # GID Grafana
     mode: '0777'
+    recurse: yes
 
 - name: Configure NFS exports
   lineinfile:
