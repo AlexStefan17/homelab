@@ -1,0 +1,28 @@
+- name: Create monitoring namespace
+  become: yes
+  shell: |
+    kubectl apply -f /opt/k3s-manifests/k3s/monitoring/namespace.yaml
+  args:
+    executable: /bin/bash
+
+- name: Create PVE exporter secret from Vault
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Secret
+      metadata:
+        name: pve-exporter-secret
+        namespace: monitoring
+      type: Opaque
+      stringData:
+        user: "{{ pve_user }}"
+        token_name: "{{ pve_token_name }}"
+        token_value: "{{ pve_token_value }}"
+
+- name: Apply Kubernetes manifests
+  shell: |
+    kubectl apply -R -f /opt/k3s-manifests/k3s/monitoring
+  args:
+    executable: /bin/bash
+  become: yes

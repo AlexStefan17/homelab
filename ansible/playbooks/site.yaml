@@ -43,7 +43,7 @@
   roles:
     - k3s-manifests-media
 
-- name: Deploy PVE exporter Secret
+- name: Deploy Monitoring
   hosts: k3s_master
   become: yes
   vars_files:
@@ -51,4 +51,4 @@
   vars:
     ansible_python_interpreter: /opt/ansible-venv/bin/python
   roles:
-    - pve-exporter-secret
+    - k3s-manifests-monitoring

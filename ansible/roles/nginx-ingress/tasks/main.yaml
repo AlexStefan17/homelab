@@ -13,10 +13,15 @@
   become: yes
 
 - name: Wait for Nginx Ingress controller to be ready
-  shell: kubectl wait --namespace ingress-nginx \
-      --for=condition=ready pod \
-      -l app.kubernetes.io/component=controller \
-      --timeout=60s
-  args:
-    executable: /bin/bash
+  command: >
+    kubectl wait --namespace ingress-nginx
+    --for=condition=ready pod
+    -l app.kubernetes.io/component=controller
+    --timeout=60s
   become: yes
+
+- name: Set nginx ingress class as default
+  command: >
+    kubectl annotate ingressclass nginx
+    ingressclass.kubernetes.io/is-default-class=true
+    --overwrite
