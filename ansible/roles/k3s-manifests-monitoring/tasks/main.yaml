@@ -55,7 +55,7 @@
 
 - name: Apply ingress manifest
   shell: |
-    kubectl apply -f /opt/k3s-manifests/k3s/monitoring-ingress.yaml
+    kubectl apply -f /opt/k3s-manifests/k3s/monitoring/monitoring-ingress.yaml
   args:
     executable: /bin/bash
   become: yes
