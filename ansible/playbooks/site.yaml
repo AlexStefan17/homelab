@@ -49,12 +49,12 @@
   roles:
     - grafana-dashboards
 
-# - name: Deploy Monitoring
-#   hosts: k3s_master
-#   become: yes
-#   vars_files:
-#     - ../group_vars/all.yaml
-#   vars:
-#     ansible_python_interpreter: /opt/ansible-venv/bin/python
-#   roles:
-#     - k3s-manifests-monitoring
+- name: Deploy Monitoring
+  hosts: k3s_master
+  become: yes
+  vars_files:
+    - ../group_vars/all.yaml
+  vars:
+    ansible_python_interpreter: /opt/ansible-venv/bin/python
+  roles:
+    - k3s-manifests-monitoring
