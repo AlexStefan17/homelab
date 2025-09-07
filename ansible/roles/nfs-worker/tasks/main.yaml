@@ -12,17 +12,12 @@
     mode: '0777'
 
 - name: Mount NFS share
-  mount:
-    path: /srv/grafana-dashboards
-    src: "{{ nfs_server }}:/srv/grafana-dashboards"
-    fstype: nfs
-    opts: rw,sync
-    state: mounted
+  command: mount -t nfs {{ nfs_server }}:/srv/grafana-dashboards /srv/grafana-dashboards
 
 - name: Ensure NFS mount persists in fstab
-  mount:
-    path: /srv/grafana-dashboards
-    src: "{{ nfs_server }}:/srv/grafana-dashboards"
-    fstype: nfs
-    opts: rw,sync
+  lineinfile:
+    path: /etc/fstab
+    line: "{{ nfs_server }}:/srv/grafana-dashboards /srv/grafana-dashboards nfs rw,sync 0 0"
+    create: yes
     state: present
+
