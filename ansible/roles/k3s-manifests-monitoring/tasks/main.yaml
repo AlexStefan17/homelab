@@ -1,3 +1,21 @@
+- name: Create Grafana dashboards directory
+  file:
+    path: /opt/grafana-dashboards
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+  become: yes
+
+- name: Copy Grafana dashboards from repo to node
+  copy:
+    src: k3s/monitoring/grafana/dashboards/
+    dest: /opt/grafana-dashboards/
+    owner: root
+    group: root
+    mode: '0644'
+  become: yes
+
 - name: Create monitoring namespace
   become: yes
   shell: |
@@ -20,9 +38,44 @@
         token_name: "{{ pve_token_name }}"
         token_value: "{{ pve_token_value }}"
 
-- name: Apply Kubernetes manifests
+- name: Apply grafana manifests
   shell: |
-    kubectl apply -R -f /opt/k3s-manifests/k3s/monitoring
+    kubectl apply -R -f /opt/k3s-manifests/k3s/monitoring/grafana
+  args:
+    executable: /bin/bash
+  become: yes
+
+- name: Apply grafana manifests
+  shell: |
+    kubectl apply -R -f /opt/k3s-manifests/k3s/monitoring/grafana
+  args:
+    executable: /bin/bash
+  become: yes
+
+- name: Apply ingress manifest
+  shell: |
+    kubectl apply -f /opt/k3s-manifests/k3s/monitoring-ingress.yaml
+  args:
+    executable: /bin/bash
+  become: yes
+
+- name: Apply node-exporter manifests
+  shell: |
+    kubectl apply -R -f /opt/k3s-manifests/k3s/monitoring/node-exporter
+  args:
+    executable: /bin/bash
+  become: yes
+
+- name: Apply prometheus manifests
+  shell: |
+    kubectl apply -R -f /opt/k3s-manifests/k3s/monitoring/prometheus
+  args:
+    executable: /bin/bash
+  become: yes
+
+- name: Apply pve-exporter manifests
+  shell: |
+    kubectl apply -R -f /opt/k3s-manifests/k3s/monitoring/pve-exporter
   args:
     executable: /bin/bash
   become: yes
