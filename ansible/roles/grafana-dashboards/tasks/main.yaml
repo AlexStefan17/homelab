@@ -6,3 +6,11 @@
     group: nogroup
     mode: '0644'
     remote_src: yes
+
+- name: Ensure Grafana owns all files in the export directory
+  file:
+    path: /srv/grafana-dashboards
+    owner: 472
+    group: 472
+    mode: '0755'
+    recurse: yes

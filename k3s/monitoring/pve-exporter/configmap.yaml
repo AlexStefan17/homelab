@@ -6,4 +6,4 @@ metadata:
 data:
   pve.yml: |-
     default:
-        verify_ssl: false
+      verify_ssl: false

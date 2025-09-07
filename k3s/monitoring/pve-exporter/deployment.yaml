@@ -18,13 +18,28 @@ spec:
         image: prompve/prometheus-pve-exporter
         ports:
         - containerPort: 9221
-        envFrom:
-        - secretRef:
-            name: pve-exporter-secret
+        env:
+          - name: PVE_USER
+            valueFrom:
+              secretKeyRef:
+                name: pve-exporter-secret
+                key: user
+          - name: PVE_TOKEN_NAME
+            valueFrom:
+              secretKeyRef:
+                name: pve-exporter-secret
+                key: token_name
+          - name: PVE_TOKEN_VALUE
+            valueFrom:
+              secretKeyRef:
+                name: pve-exporter-secret
+                key: token_value
+          - name: PVE_VERIFY_SSL
+            value: "false"
         volumeMounts:
         - name: config
           mountPath: /etc/prometheus/pve.yml
-          subPath: pve.yml 
+          subPath: pve.yml
       volumes:
       - name: config
         configMap:

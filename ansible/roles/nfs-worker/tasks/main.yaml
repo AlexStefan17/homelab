@@ -9,7 +9,8 @@
     state: directory
     owner: 472
     group: 472
-    mode: '0777'
+    mode: '0775'
+    recurse: yes
 
 - name: Mount NFS share
   command: mount -t nfs {{ nfs_server }}:/srv/grafana-dashboards /srv/grafana-dashboards

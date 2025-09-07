@@ -9,7 +9,7 @@
     state: directory
     owner: 472        # UID Grafana
     group: 472        # GID Grafana
-    mode: '0777'
+    mode: '0775'
     recurse: yes
 
 - name: Configure NFS exports
