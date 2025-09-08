@@ -1,0 +1,48 @@
+- name: Create cattle-system namespace
+  kubernetes.core.k8s:
+    api_version: v1
+    kind: Namespace
+    name: cattle-system
+    state: present
+
+- name: Add Rancher Helm repo
+  kubernetes.core.helm_repository:
+    name: rancher-latest
+    repo_url: https://releases.rancher.com/server-charts/latest
+    state: present
+
+- name: Update Helm repos using command
+  command: helm repo update
+
+- name: Install Rancher
+  kubernetes.core.helm:
+    release_name: rancher
+    chart_ref: rancher-latest/rancher
+    namespace: cattle-system
+    create_namespace: false
+    release_values:
+      hostname: rancher.local.com
+    state: present
+
+- name: Wait for Rancher deployment to be ready
+  kubernetes.core.k8s_info:
+    kind: Deployment
+    namespace: cattle-system
+    name: rancher
+  register: rancher_deploy
+  until: rancher_deploy.resources[0].status.availableReplicas is defined and rancher_deploy.resources[0].status.availableReplicas > 0
+  retries: 30
+  delay: 20
+
+- name: Get Rancher bootstrap password
+  command: kubectl -n cattle-system get secret bootstrap-secret -o jsonpath="{.data.bootstrapPassword}"
+  register: bootstrap_password_b64
+  changed_when: false
+
+- name: Decode Rancher bootstrap password
+  set_fact:
+    bootstrap_password: "{{ bootstrap_password_b64.stdout | b64decode }}"
+
+- name: Show Rancher bootstrap password
+  debug:
+    msg: "Rancher initial password: {{ bootstrap_password }}"

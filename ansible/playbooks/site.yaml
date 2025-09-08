@@ -73,3 +73,19 @@
     nfs_server: 172.20.50.150
   roles:
     - k3s-manifests-monitoring
+
+- name: Deploy Cert-Manager
+  hosts: k3s_master
+  become: yes
+  vars:
+    ansible_python_interpreter: /opt/ansible-venv/bin/python
+  roles:
+    - cert-manager
+
+- name: Deploy Rancher
+  hosts: k3s_master
+  become: yes
+  vars:
+    ansible_python_interpreter: /opt/ansible-venv/bin/python
+  roles:
+    - rancher
