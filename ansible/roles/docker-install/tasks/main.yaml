@@ -1,0 +1,65 @@
+---
+- name: Update apt cache
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: Install required packages for Ubuntu
+  apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - gnupg
+      - software-properties-common
+    state: present
+  when: ansible_distribution == "Ubuntu"
+
+- name: Install required packages for Debian
+  apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - gnupg
+    state: present
+  when: ansible_distribution == "Debian"
+
+- name: Download Docker GPG key
+  ansible.builtin.get_url:
+    url: "https://download.docker.com/linux/{{ ansible_distribution | lower }}/gpg"
+    dest: /usr/share/keyrings/docker-archive-keyring.gpg
+    mode: '0644'
+
+- name: Add Docker repository for Ubuntu
+  apt_repository:
+    repo: "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu {{ ansible_lsb.codename }} stable"
+    state: present
+  when: ansible_distribution == "Ubuntu"
+
+- name: Add Docker repository for Debian
+  apt_repository:
+    repo: "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian {{ ansible_lsb.codename }} stable"
+    state: present
+  when: ansible_distribution == "Debian"
+
+- name: Update apt cache after adding Docker repo
+  apt:
+    update_cache: yes
+
+- name: Install Docker
+  apt:
+    name: "docker-ce{{ '-' + docker_version if docker_version != 'latest' else '' }}"
+    state: present
+
+- name: Ensure Docker service is running
+  systemd:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: Add user alex to docker group
+  user:
+    name: "{{ docker_user }}"
+    groups: docker
+    append: yes
