@@ -89,3 +89,23 @@ spec:
             name: homarr
             port:
               number: 80
+  - host: immich.local.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: immich
+            port:
+              number: 80
+  - host: nextcloud.local.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: nextcloud
+            port:
+              number: 80
