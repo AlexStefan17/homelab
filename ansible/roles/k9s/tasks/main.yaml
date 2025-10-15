@@ -1,0 +1,16 @@
+- name: Download k9s .deb package
+  ansible.builtin.get_url:
+    url: "{{ k9s_deb_url }}"
+    dest: "{{ k9s_deb_file }}"
+    mode: "0644"
+
+- name: Install k9s package
+  ansible.builtin.apt:
+    deb: "{{ k9s_deb_file }}"
+    state: present
+  become: true
+
+- name: Remove .deb file after installation
+  ansible.builtin.file:
+    path: "{{ k9s_deb_file }}"
+    state: absent

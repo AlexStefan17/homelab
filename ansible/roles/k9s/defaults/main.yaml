@@ -1,0 +1,2 @@
+k9s_deb_url: "https://github.com/derailed/k9s/releases/download/v0.50.15/k9s_linux_amd64.deb"
+k9s_deb_file: "/tmp/k9s_linux_amd64.deb"

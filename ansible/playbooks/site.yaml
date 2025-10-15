@@ -74,6 +74,12 @@
   roles:
     - k3s-manifests-monitoring
 
+- name: Install k9s
+  hosts: k3s_master
+  become: yes
+  roles:
+    - k9s
+
 - name: Deploy Cert-Manager
   hosts: k3s_master
   become: yes
