@@ -61,3 +61,17 @@
   args:
     executable: /bin/bash
   become: yes
+
+- name: Apply loki manifests
+  shell: |
+    kubectl apply -R -f /opt/k3s-manifests/k3s/monitoring/loki
+  args:
+    executable: /bin/bash
+  become: yes
+
+- name: Apply promtail manifests
+  shell: |
+    kubectl apply -R -f /opt/k3s-manifests/k3s/monitoring/promtail
+  args:
+    executable: /bin/bash
+  become: yes
