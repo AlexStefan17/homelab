@@ -1,0 +1,36 @@
+- name: Add Jenkins GPG key
+  get_url:
+    url: https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
+    dest: /etc/apt/keyrings/jenkins-keyring.asc
+    mode: "0644"
+
+- name: Add Jenkins repository using deb822 format
+  ansible.builtin.deb822_repository:
+    name: jenkins
+    types: [deb]
+    uris: https://pkg.jenkins.io/debian-stable
+    suites: [binary/]
+    signed_by: /etc/apt/keyrings/jenkins-keyring.asc
+    enabled: yes
+
+- name: Install Java and Ansible
+  apt:
+    name:
+      - fontconfig
+      - openjdk-21-jre
+      - ansible
+    state: present
+    update_cache: yes
+
+- name: Install Jenkins
+  apt:
+    name:
+      - jenkins
+    state: present
+    update_cache: yes
+
+- name: Enable and start Jenkins service
+  ansible.builtin.systemd:
+    name: jenkins
+    state: started
+    enabled: yes
