@@ -6,3 +6,4 @@
     - jenkins-install
     - terraform-install
     - docker-install
+    - swapon
