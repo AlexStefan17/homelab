@@ -64,3 +64,43 @@
     state: restarted
     enabled: yes
   become: yes
+
+- name: Ensure Jenkins tmp dir exists
+  file:
+    path: /var/jenkins_tmp
+    state: directory
+    owner: jenkins
+    group: jenkins
+    mode: "0755"
+  become: yes
+
+- name: Ensure systemd override directory for Jenkins exists
+  file:
+    path: /etc/systemd/system/jenkins.service.d
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+  become: yes
+
+- name: Write Jenkins systemd override to change tmp dir
+  copy:
+    dest: /etc/systemd/system/jenkins.service.d/override.conf
+    content: |
+      [Service]
+      ExecStart=
+      ExecStart=/usr/bin/java -Djava.io.tmpdir=/var/jenkins_tmp -jar /usr/share/java/jenkins.war
+    owner: root
+    group: root
+    mode: "0644"
+  become: yes
+
+- name: Reload systemd daemon
+  command: systemctl daemon-reexec
+  become: yes
+
+- name: Restart Jenkins
+  service:
+    name: jenkins
+    state: restarted
+  become: yes
