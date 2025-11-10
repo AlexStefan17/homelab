@@ -1,2 +1,5 @@
-# homelab
-Repo for my homelab
+# Homelab
+
+## Diagram
+
+![Homelab Diagram](./homelab.svg)
