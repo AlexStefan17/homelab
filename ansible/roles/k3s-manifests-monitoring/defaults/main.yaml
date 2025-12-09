@@ -1,0 +1,8 @@
+namespace_path: "/opt/k3s-manifests/k3s/monitoring/namespace.yaml"
+grafana_path: "/opt/k3s-manifests/k3s/monitoring/grafana/"
+ingress_path: "/opt/k3s-manifests/k3s/monitoring/monitoring-ingress.yaml"
+node_path: "/opt/k3s-manifests/k3s/monitoring/node-exporter/"
+prometheus_path: "/opt/k3s-manifests/k3s/monitoring/prometheus/"
+pve_path: "/opt/k3s-manifests/k3s/monitoring/pve-exporter/"
+loki_path: "/opt/k3s-manifests/k3s/monitoring/loki/"
+promtail_path: "/opt/k3s-manifests/k3s/monitoring/promtail/"

@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: portainer
+  namespace: media-apps
+spec:
+  ports:
+    - port: 9443
+      targetPort: 9443
+  clusterIP: None
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: portainer
+  namespace: media-apps
+subsets:
+  - addresses:
+      - ip: 172.20.50.152
+    ports:
+      - port: 9443

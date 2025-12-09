@@ -1,0 +1,253 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: jellyfin
+  namespace: media-apps
+spec:
+  ports:
+    - port: 80
+      targetPort: 8096
+  clusterIP: None
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: jellyfin
+  namespace: media-apps
+subsets:
+  - addresses:
+      - ip: 172.20.50.130
+    ports:
+      - port: 8096
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: qbittorrent
+  namespace: media-apps
+spec:
+  ports:
+    - port: 80
+      targetPort: 8080
+  clusterIP: None
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: qbittorrent
+  namespace: media-apps
+subsets:
+  - addresses:
+      - ip: 172.20.50.147
+    ports:
+      - port: 8080
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: radarr
+  namespace: media-apps
+spec:
+  ports:
+    - port: 80
+      targetPort: 7878
+  clusterIP: None
+
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: radarr
+  namespace: media-apps
+subsets:
+  - addresses:
+      - ip: 172.20.50.147
+    ports:
+      - port: 7878
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sonarr
+  namespace: media-apps
+spec:
+  ports:
+    - port: 80
+      targetPort: 8989
+  clusterIP: None
+
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: sonarr
+  namespace: media-apps
+subsets:
+  - addresses:
+      - ip: 172.20.50.147
+    ports:
+      - port: 8989
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: prowlarr
+  namespace: media-apps
+spec:
+  ports:
+    - port: 80
+      targetPort: 9696
+  clusterIP: None
+
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: prowlarr
+  namespace: media-apps
+subsets:
+  - addresses:
+      - ip: 172.20.50.147
+    ports:
+      - port: 9696
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bazarr
+  namespace: media-apps
+spec:
+  ports:
+    - port: 80
+      targetPort: 6767
+  clusterIP: None
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: bazarr
+  namespace: media-apps
+subsets:
+  - addresses:
+      - ip: 172.20.50.147
+    ports:
+      - port: 6767
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jellyseerr
+  namespace: media-apps
+spec:
+  ports:
+    - port: 80
+      targetPort: 5055
+  clusterIP: None
+
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: jellyseerr
+  namespace: media-apps
+subsets:
+  - addresses:
+      - ip: 172.20.50.147
+    ports:
+      - port: 5055
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: homarr
+  namespace: media-apps
+spec:
+  ports:
+    - port: 80
+      targetPort: 7575
+  clusterIP: None
+  
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: homarr
+  namespace: media-apps
+subsets:
+  - addresses:
+      - ip: 172.20.50.152
+    ports:
+      - port: 7575
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: immich
+  namespace: media-apps
+spec:
+  ports:
+    - port: 80
+      targetPort: 2283
+  clusterIP: None
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: immich
+  namespace: media-apps
+subsets:
+  - addresses:
+      - ip: 172.20.50.60
+    ports:
+      - port: 2283
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nextcloud
+  namespace: media-apps
+spec:
+  ports:
+    - port: 80
+      targetPort: 8080
+  clusterIP: None
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: nextcloud
+  namespace: media-apps
+subsets:
+  - addresses:
+      - ip: 172.20.50.60
+    ports:
+      - port: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nas
+  namespace: media-apps
+spec:
+  ports:
+    - port: 80
+      targetPort: 80
+  clusterIP: None
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: nas
+  namespace: media-apps
+subsets:
+  - addresses:
+      - ip: 172.20.50.133
+    ports:
+      - port: 80

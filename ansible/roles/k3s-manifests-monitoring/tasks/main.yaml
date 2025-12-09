@@ -1,7 +1,7 @@
 - name: Create monitoring namespace
   become: yes
   shell: |
-    kubectl apply -f /opt/k3s-manifests/k3s/monitoring/namespace.yaml
+    kubectl apply -f "{{ namespace_path }}"
   args:
     executable: /bin/bash
 
@@ -22,56 +22,56 @@
 
 - name: Apply grafana manifests
   shell: |
-    kubectl apply -R -f /opt/k3s-manifests/k3s/monitoring/grafana
+    kubectl apply -R -f "{{ grafana_path }}"
   args:
     executable: /bin/bash
   become: yes
 
-- name: Apply grafana manifests
-  shell: |
-    kubectl apply -R -f /opt/k3s-manifests/k3s/monitoring/grafana
-  args:
-    executable: /bin/bash
-  become: yes
+# - name: Apply grafana manifests
+#   shell: |
+#     kubectl apply -R -f /opt/k3s-manifests/k3s/monitoring/grafana
+#   args:
+#     executable: /bin/bash
+#   become: yes
 
 - name: Apply ingress manifest
   shell: |
-    kubectl apply -f /opt/k3s-manifests/k3s/monitoring/monitoring-ingress.yaml
+    kubectl apply -f "{{ ingress_path }}"
   args:
     executable: /bin/bash
   become: yes
 
 - name: Apply node-exporter manifests
   shell: |
-    kubectl apply -R -f /opt/k3s-manifests/k3s/monitoring/node-exporter
+    kubectl apply -R -f "{{ node_path }}"
   args:
     executable: /bin/bash
   become: yes
 
 - name: Apply prometheus manifests
   shell: |
-    kubectl apply -R -f /opt/k3s-manifests/k3s/monitoring/prometheus
+    kubectl apply -R -f "{{ prometheus_path }}"
   args:
     executable: /bin/bash
   become: yes
 
 - name: Apply pve-exporter manifests
   shell: |
-    kubectl apply -R -f /opt/k3s-manifests/k3s/monitoring/pve-exporter
+    kubectl apply -R -f "{{ pve_path }}"
   args:
     executable: /bin/bash
   become: yes
 
 - name: Apply loki manifests
   shell: |
-    kubectl apply -R -f /opt/k3s-manifests/k3s/monitoring/loki
+    kubectl apply -R -f "{{ loki_path }}"
   args:
     executable: /bin/bash
   become: yes
 
 - name: Apply promtail manifests
   shell: |
-    kubectl apply -R -f /opt/k3s-manifests/k3s/monitoring/promtail
+    kubectl apply -R -f "{{ promtail_path }}"
   args:
     executable: /bin/bash
   become: yes
