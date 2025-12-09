@@ -1,0 +1,99 @@
+---
+- name: Apply common configuration to all nodes
+  hosts: k3s_master, k3s_worker
+  gather_facts: no
+  become: yes
+  roles:
+    - common
+
+- name: Prepare VM for Kubernetes tasks
+  hosts: k3s_master
+  gather_facts: no
+  become: yes
+  roles:
+    - install-k8s-deps
+
+- name: Setup K3s master
+  hosts: k3s_master
+  become: yes
+  roles:
+    - k3s-master
+
+- name: Setup K3s worker
+  hosts: k3s_worker
+  become: yes
+  roles:
+    - k3s-worker
+
+- name: Install Helm on master
+  hosts: k3s_master
+  become: yes
+  roles:
+    - helm
+
+- name: Install NGINX Ingress on master
+  hosts: k3s_master
+  become: yes
+  roles:
+    - nginx-ingress
+
+- name: Deploy k3s manifests
+  hosts: k3s_master
+  become: yes
+  roles:
+    - k3s-manifests-media
+      manifests_path: "/opt/k3s-manifests/k3s/test/nginx-ingress/"
+
+- name: Create NFS server for Grafana
+  hosts: k3s_master
+  become: yes
+  roles:
+    - nfs-server-grafana
+
+- name: Mount NFS server on workers
+  hosts: k3s_worker
+  become: yes
+  vars:
+    nfs_server: 172.20.50.150
+  roles:
+    - nfs-worker
+
+- name: Deploy grafana-dashboards to NFS server
+  hosts: k3s_master
+  become: yes
+  roles:
+    - grafana-dashboards
+      dashboards_path: "/opt/k3s-manifests/k3s/test/monitoring/grafana-dashboards/"
+
+- name: Deploy Monitoring
+  hosts: k3s_master
+  become: yes
+  vars_files:
+    - ../group_vars/all.yaml
+  vars:
+    ansible_python_interpreter: /opt/ansible-venv/bin/python
+    nfs_server: 172.20.50.150
+  roles:
+    - k3s-manifests-monitoring
+
+- name: Install k9s
+  hosts: k3s_master
+  become: yes
+  roles:
+    - k9s
+
+- name: Deploy Cert-Manager
+  hosts: k3s_master
+  become: yes
+  vars:
+    ansible_python_interpreter: /opt/ansible-venv/bin/python
+  roles:
+    - cert-manager
+
+- name: Deploy Rancher
+  hosts: k3s_master
+  become: yes
+  vars:
+    ansible_python_interpreter: /opt/ansible-venv/bin/python
+  roles:
+    - rancher

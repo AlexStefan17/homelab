@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-datasources
+  namespace: monitoring
+data:
+  datasources.yml: |
+    apiVersion: 1
+
+    datasources:  # List of data sources to be configured
+      - name: prometheus  # The name of the data source, as it will appear in Grafana.
+        type: prometheus  # The type of the data source, indicating it is a Prometheus instance.
+        access: proxy  # Access mode; 'proxy' means requests will go through the Grafana server.
+        url: http://prometheus:9090
+
+      - name: Loki
+        type: loki
+        access: proxy
+        url: http://loki.monitoring.svc.cluster.local:3100
+        uid: loki
+        jsonData:
+          maxLines: 1000

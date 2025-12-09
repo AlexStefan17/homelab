@@ -1,6 +1,6 @@
 - name: Copy Grafana dashboards to NFS
   copy:
-    src: /opt/k3s-manifests/k3s/monitoring/grafana-dashboards/
+    src: {{ dashboards_path }}
     dest: /srv/grafana-dashboards/
     owner: nobody
     group: nogroup

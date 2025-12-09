@@ -25,7 +25,7 @@
 
 - name: Apply Kubernetes manifests
   shell: |
-    kubectl apply -R -f /opt/k3s-manifests/k3s/nginx-ingress
+    kubectl apply -R -f "{{ manifests_path }}"
   args:
     executable: /bin/bash
   become: yes
