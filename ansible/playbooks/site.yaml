@@ -41,7 +41,8 @@
   hosts: k3s_master
   become: yes
   roles:
-    - k3s-manifests-media
+    - role: k3s-manifests-media
+      manifests_path: "/opt/k3s-manifests/k3s/prod/nginx-ingress/"
 
 - name: Create NFS server for Grafana
   hosts: k3s_master
@@ -61,7 +62,8 @@
   hosts: k3s_master
   become: yes
   roles:
-    - grafana-dashboards
+    - role: grafana-dashboards
+      dashboards_path: "/opt/k3s-manifests/k3s/prod/monitoring/grafana-dashboards/"
 
 - name: Deploy Monitoring
   hosts: k3s_master
@@ -72,7 +74,15 @@
     ansible_python_interpreter: /opt/ansible-venv/bin/python
     nfs_server: 172.20.50.150
   roles:
-    - k3s-manifests-monitoring
+    - role: k3s-manifests-monitoring
+      namespace_path: "/opt/k3s-manifests/k3s/prod/monitoring/namespace.yaml"
+      grafana_path: "/opt/k3s-manifests/k3s/prod/monitoring/grafana/"
+      ingress_path: "/opt/k3s-manifests/k3s/prod/monitoring/monitoring-ingress.yaml"
+      node_path: "/opt/k3s-manifests/k3s/prod/monitoring/node-exporter/"
+      prometheus_path: "/opt/k3s-manifests/k3s/prod/monitoring/prometheus/"
+      pve_path: "/opt/k3s-manifests/k3s/prod/monitoring/pve-exporter/"
+      loki_path: "/opt/k3s-manifests/k3s/prod/monitoring/loki/"
+      promtail_path: "/opt/k3s-manifests/k3s/prod/monitoring/promtail/"
 
 - name: Install k9s
   hosts: k3s_master
