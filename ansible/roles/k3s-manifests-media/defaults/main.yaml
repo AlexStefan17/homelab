@@ -1,1 +1,2 @@
 manifests_path: "/opt/k3s-manifests/k3s/nginx-ingress/"
+git_branch: "main"

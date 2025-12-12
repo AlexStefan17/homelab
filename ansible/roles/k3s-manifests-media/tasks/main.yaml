@@ -12,7 +12,7 @@
   git:
     repo: 'https://github.com/AlexStefan17/homelab.git'
     dest: /opt/k3s-manifests
-    version: jenkinsfiles
+    version: "{{ git_branch }}"
     force: yes
   become: yes
 
