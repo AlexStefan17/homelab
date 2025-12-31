@@ -8,4 +8,4 @@ variable "vm_gateway" {}
 variable "ssh_key" {}
 variable "ciuser" {}
 variable "cipassword" {}
-
+variable "vm_vlan_tag" {}

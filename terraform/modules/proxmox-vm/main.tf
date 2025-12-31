@@ -35,6 +35,7 @@ resource "proxmox_vm_qemu" "vm" {
     id     = 0
     model  = "virtio"
     bridge = var.vm_network
+    tag = var.vm_vlan_tag
   }
 
   serial {

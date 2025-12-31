@@ -10,6 +10,8 @@ module "vms" {
 
   vm_network   = var.vm_network
   vm_gateway   = var.vm_gateway
+  vm_vlan_tag  = lookup(each.value, "vm_vlan_tag", null)
+  
   ssh_key      = var.ssh_key
   ciuser       = var.ciuser
   cipassword   = var.cipassword

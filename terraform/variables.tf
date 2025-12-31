@@ -28,6 +28,7 @@ variable "vm_list" {
     vm_cores     = number
     vm_disk_size = string
     vm_ip        = string
+    vm_vlan_tag  = optional(number)
   }))
 }
 
@@ -42,4 +43,9 @@ variable "proxmox_api_token_id" {
 variable "proxmox_api_token_secret" {
   type      = string
   sensitive = true
+}
+
+variable "vm_vlan_tag" {
+  type    = number
+  default = null
 }
