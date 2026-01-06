@@ -17,8 +17,8 @@ data:
       - job_name: 'node_exporter'
         static_configs:
           - targets:
-            - 172.20.50.150:9100   # master
-            - 172.20.50.151:9100   # worker
+            - 172.20.70.160:9100   # master
+            - 172.20.70.161:9100   # worker
 
       - job_name: 'pve'
         static_configs:
