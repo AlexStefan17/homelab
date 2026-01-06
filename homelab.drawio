@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (X11; Linux x86_64; rv:145.0) Gecko/20100101 Firefox/145.0" version="29.2.4">
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (X11; Linux x86_64; rv:146.0) Gecko/20100101 Firefox/146.0" version="29.2.9">
   <diagram name="Page-1" id="FGtkA7wrwIHAZYtKyNVf">
     <mxGraphModel dx="1426" dy="783" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -270,10 +270,19 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="aC7h2Kt9KgIzwu-Q_mF2-23" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="vlan1" vertex="1">
-          <mxGeometry height="30" width="60" x="394.98" y="250" as="geometry" />
+          <mxGeometry height="30" width="60" x="181.8" y="269.06" as="geometry" />
         </mxCell>
         <mxCell id="aC7h2Kt9KgIzwu-Q_mF2-24" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="vlan10" vertex="1">
           <mxGeometry height="30" width="60" x="334.98" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="Ay_fDIR7Bkg-oQ55dohV-1" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="vlan1" vertex="1">
+          <mxGeometry height="30" width="60" x="488.19" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="Ay_fDIR7Bkg-oQ55dohV-2" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="vlan20" vertex="1">
+          <mxGeometry height="30" width="60" x="50" y="375" as="geometry" />
+        </mxCell>
+        <mxCell id="Ay_fDIR7Bkg-oQ55dohV-3" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="vlan20" vertex="1">
+          <mxGeometry height="30" width="60" x="720" y="380" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
