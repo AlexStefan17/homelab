@@ -54,7 +54,7 @@
   hosts: k3s_worker
   become: yes
   vars:
-    nfs_server: 172.20.50.150
+    nfs_server: 172.20.70.150
   roles:
     - nfs-worker
 
@@ -72,7 +72,7 @@
     - ../group_vars/all.yaml
   vars:
     ansible_python_interpreter: /opt/ansible-venv/bin/python
-    nfs_server: 172.20.50.150
+    nfs_server: 172.20.70.150
   roles:
     - role: k3s-manifests-monitoring
       namespace_path: "/opt/k3s-manifests/k3s/prod/monitoring/namespace.yaml"
