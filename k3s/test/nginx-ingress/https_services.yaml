@@ -16,6 +16,6 @@ metadata:
   namespace: media-apps
 subsets:
   - addresses:
-      - ip: 172.20.50.152
+      - ip: 172.20.70.152
     ports:
       - port: 9443
