@@ -18,7 +18,7 @@ services:
       - TORRENTING_PORT=6881
     volumes:
       - /docker/qbittorrent:/config
-      - /mnt/samba_share/media_server/data:/data
+      - /mnt/share/media_server/data:/data
     ports:
       - 8080:8080
       - 6881:6881
@@ -55,7 +55,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /docker/sonarr:/config
-      - /mnt/samba_share/media_server/data:/data
+      - /mnt/share/media_server/data:/data
     ports:
       - 8989:8989
     networks:
@@ -73,7 +73,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /docker/radarr:/config
-      - /mnt/samba_share/media_server/data:/data
+      - /mnt/share/media_server/data:/data
     ports:
       - 7878:7878
     networks:
@@ -87,11 +87,11 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /docker/lidarr:/config
-      - /mnt/samba_share/media_server/data:/data
+      - /mnt/share/media_server/data:/data
     environment:
-     - PUID=1000
-     - PGID=1000
-     - TZ=Europe/Bucharest
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Bucharest
     ports:
       - 8686:8686
     networks:
@@ -109,24 +109,29 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /docker/bazarr:/config
-      - /mnt/samba_share/media_server/data:/data
+      - /mnt/share/media_server/data:/data
     ports:
       - 6767:6767
     networks:
       servarrnetwork:
         ipv4_address: 172.18.0.15
 
-  jellyseerr:
-    container_name: jellyseerr
-    image: fallenbagel/jellyseerr:latest
+  seerr:
+    image: ghcr.io/seerr-team/seerr:latest
+    init: true
+    container_name: seerr
     environment:
-      - PUID=1000
-      - PGID=1000
       - TZ=Europe/Bucharest
     volumes:
-      - /docker/jellyseerr:/app/config
+      - /docker/seerr:/app/config
     ports:
       - 5055:5055
+    healthcheck:
+      test: wget --no-verbose --tries=1 --spider http://localhost:5055/api/v1/settings/public || exit 1
+      start_period: 20s
+      timeout: 3s
+      interval: 15s
+      retries: 3
     restart: unless-stopped
     networks:
       servarrnetwork:
